@@ -1,0 +1,8 @@
+.settings
+bin
+lib
+output-bench-memoria
+output-bench-memoria2
+output-bench-primos
+.classpath
+.project
