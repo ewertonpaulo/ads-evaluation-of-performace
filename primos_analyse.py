@@ -1,9 +1,6 @@
 import os
 import matplotlib.pyplot as plt
 
-dir_memoria = "output-bench-memoria"
-dir_primos = "output-bench-primos"
-
 dados = []
 
 def dados_arquivos(dir_):
@@ -23,19 +20,23 @@ def dados_arquivos(dir_):
         dados.append(lista_linhas)
         txt.close()
 
+def vazao_calc(time, requisicoes):
+    elapsed_time_segundos = time/1000
+    numero_max = requisicoes
+    return numero_max/elapsed_time_segundos
+
+def tempo_medio_serv(time, requisicoes):
+    return time/requisicoes
+
 def dados_vazao():
     for item in dados:
-        
-        elapsed_time_segundos = item[3]/1000
-        numero_max = item[1]
-        
-        vaz = numero_max/elapsed_time_segundos
+        vaz = vazao_calc(item[3],item[1])
+        temp_med_ser(item[3],item[1])
         
         vazao.append(vaz)
-        requisicoes.append(numero_max)
-        tempo_medio_servico.append(elapsed_time_segundos/numero_max)
+        requisicoes.append(item[1])
+        tempo_medio_servico.append(temp_med_ser)
 
-    #vazao.sort()
     requisicoes.sort()
 
 def grafico_vazao_req():
@@ -56,6 +57,9 @@ vazao = []
 requisicoes = []
 tempo_medio_servico = []
 
+dir_memoria = "output-bench-memoria"
+dir_memoria2 = "output-bench-memoria2"
+dir_primos = "output-bench-primos"
 
 dados_arquivos(dir_primos)
 dados_vazao()
