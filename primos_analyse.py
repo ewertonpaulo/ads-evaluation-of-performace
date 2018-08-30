@@ -47,8 +47,8 @@ def dados_primos():
 
 def dados_memo():
     for item in dados:
-        vazao.append(item[3]/(item[6]/1000))
-        tempo_medio_servico.append((item[6]/1000)/item[3])
+        vazao.append(item[2]/(item[6]/1000))
+        tempo_medio_servico.append((item[6]/1000)/item[2])
         tamanho_array.append(item[0])
         acessos.append(item[2])
 
