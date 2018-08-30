@@ -2,6 +2,11 @@ import os
 import matplotlib.pyplot as plt
 
 dados = []
+vazao = []
+requisicoes = []
+tempo_medio_servico = []
+tamanho_array = []
+acessos = []
 
 def dados_arquivos(dir_):
     arquivos = os.listdir(dir_)
@@ -20,11 +25,11 @@ def dados_arquivos(dir_):
         dados.append(lista_linhas)
         txt.close()
 
-
 def inicio(dados):
     return dados[0]
 
-
+def inicio_mem2(dados):
+    return dados[2]
 
 def vazao_calc(time, requisicoes):
     elapsed_time_segundos = time/1000
@@ -43,58 +48,43 @@ def dados_primos():
 def dados_memo():
     for item in dados:
         vazao.append(item[3]/(item[6]/1000))
-        requisicoes.append(item[2])
         tempo_medio_servico.append((item[6]/1000)/item[3])
         tamanho_array.append(item[0])
-    
-    #vazao.sort()
+        acessos.append(item[2])
 
-def grafico_primo_vazao_req():
-    plt.plot(requisicoes,vazao)
-    plt.title('Vazão vs Requisições')
+def grafico(lista1, lista2, title):
+    plt.plot(lista1,lista2)
+    plt.title(title)
     plt.show()
-
-def grafico_primo_tempo_req():
-    plt.plot(requisicoes, tempo_medio_servico)
-    plt.title('Requisições vc Tempo médio')
-    plt.show()
-
-def grafico_memo_arraySize_vazao():
-    plt.plot(tamanho_array, vazao)
-    plt.title('ArraySize vs Vazão')
-    plt.show()
-
-def grafico_memo_arraySize_temposerv():
-    plt.plot(tamanho_array, tempo_medio_servico)
-    plt.title('ArraySize vs Tempo de Serviço')
-    plt.show()
-
-    
-vazao = []
-requisicoes = []
-tempo_medio_servico = []
-tamanho_array = []
 
 dir_memoria = "output-bench-memoria"
 dir_memoria2 = "output-bench-memoria2"
 dir_primos = "output-bench-primos"
 
-"""
-#output-bench-primos
-dados_arquivos(dir_primos)
-dados_primos()
-dados.sort(key = inicio)
-grafico_primo_vazao_req()
-grafico_primo_tempo_req()
+print("1 - questão 1 output-bench-primos")
+print("2 - questão 2.1 output-bench-memoria-requisiçoes-fixas")
+print("3 - questão 2.2 output-bench-memoria2")
+escolha = input("escolha: ")
 
-"""
-#output-bench-memoria-requisiçoes-fixas
-dados_arquivos(dir_memoria)
-dados.sort(key = inicio)
-dados_memo()
-grafico_memo_arraySize_vazao()
-grafico_memo_arraySize_temposerv()
-
-
-
-    
+if escolha == "1":
+    #output-bench-primos
+    dados_arquivos(dir_primos)
+    dados_primos()
+    dados.sort(key = inicio)
+    grafico(requisicoes, vazao, 'Vazão vs Requisições')
+    grafico(requisicoes, tempo_medio_servico, 'Requisições vc Tempo médio')
+if escolha == "2":
+    #output-bench-memoria-requisiçoes-fixas
+    dados_arquivos(dir_memoria)
+    dados.sort(key = inicio)
+    dados_memo()
+    grafico(tamanho_array, vazao, 'ArraySize vs Vazão')
+    grafico(tamanho_array, tempo_medio_servico, 'ArraySize vs Tempo de Serviço')
+if escolha == "3":
+    #output-bench-memoria2
+    dados_arquivos(dir_memoria2)
+    dados.sort(key = inicio_mem2)
+    dados_memo()
+    vazao.sort()
+    grafico(acessos, vazao, 'Acessos vs Vazão')
+    grafico(acessos, tempo_medio_servico, 'Acessos vs Tempo médio de Serviço')
